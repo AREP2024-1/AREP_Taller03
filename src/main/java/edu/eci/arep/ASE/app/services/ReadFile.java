@@ -82,6 +82,15 @@ public class ReadFile {
         enviarImagen(clientSocket, path);
     }
 
+    /*
+     * Lee el controlador de la solicitud HTTP y envía la respuesta al cliente a través del socket proporcionado.
+     * @param clientSocket Socket del cliente al que se enviará la respuesta del controlador.
+     * @param sparkController Controlador Spark utilizado para manejar la solicitud HTTP.
+     * @param path Ruta de la solicitud HTTP que se va a manejar.
+     * @param metodo Método HTTP de la solicitud (GET, POST).
+     * @throws IOException Si ocurre algún error de entrada/salida durante la ejecución.
+     * @throws HTTPException Si hay algún error en la solicitud HTTP.
+     */
     public void lecturaController(Socket clientSocket, SparkController sparkController, String path, String metodo) throws IOException, HTTPException{
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
         String otlputline = switch (metodo){

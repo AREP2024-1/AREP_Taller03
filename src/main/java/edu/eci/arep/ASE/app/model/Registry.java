@@ -20,6 +20,12 @@ public class Registry {
         this.registers = new HashMap<>();
     }
 
+    /*
+     * Registra un handler para el método HTTP GET con un endPoint especifico.
+     * @param endPoint Ruta del endPoint.
+     * @param handler Función que se ejecutará cuando se haga una petición GET al endPoint.
+     * @throws HTTPException Si el endPoint no es valido.
+     */
     public <R> void get(String endPoint, BiFunction<Request, Response, R> handler){
         if (!validateEndPoint(endPoint, true)){
             throw new HTTPException();
@@ -32,6 +38,14 @@ public class Registry {
         registers.get(endPoint).add(new HTTPMetodo("GET", handler));
     }
 
+    /*
+     * Ejecuta el handler registrado para el método HTTP GET con un endPoint especifico.
+     * @param endPoint Ruta del endPoint.
+     * @param request Objeto request que contiene la información de la petición.
+     * @param response Objeto response que contiene la información de la respuesta.
+     * @throws HTTPException Si el endPoint no es valido.
+     * @return R El resultado de ejecutar el handler.
+     */
     public <R> R doGet(String endPoint, Request request, Response response){
         String endPointFinal = findEndPoint(endPoint);
         if (endPointFinal.equals("")){
@@ -44,6 +58,12 @@ public class Registry {
         return funcionMetodo.ejecutar(request, response);
     } 
 
+    /*
+     * Registra un handler para el método HTTP POST con un endPoint especifico.
+     * @param endPoint Ruta del endPoint.
+     * @param handler Función que se ejecutará cuando se haga una petición POST al endPoint.
+     * @throws HTTPException Si el endPoint no es valido.
+     */
     public <R> void post(String endPoint, BiFunction<Request, Response, R> handler){
         if (!validateEndPoint(endPoint, true)){
             throw new HTTPException();
@@ -56,6 +76,14 @@ public class Registry {
         registers.get(endPoint).add(new HTTPMetodo("POST", handler));
     }
 
+    /*
+     * Ejecuta el handler registrado para el método HTTP POST con un endPoint especifico.
+     * @param endPoint Ruta del endPoint.
+     * @param request Objeto request que contiene la información de la petición.
+     * @param response Objeto response que contiene la información de la respuesta.
+     * @throws HTTPException Si el endPoint no es valido.
+     * @return R El resultado de ejecutar el handler.
+     */
     public <R> R doPost(String endPoint, Request request, Response response){
         String endPointFinal = findEndPoint(endPoint);
         if (endPointFinal.equals("")){
@@ -68,6 +96,11 @@ public class Registry {
         return funcionMetodo.ejecutar(request, response);
     } 
 
+    /*
+     * Busca el endPoint especifico que coincida con el endPoint dado.
+     * @param endPoint Ruta del endPoint.
+     * @return String El endPoint especifico que coincide con el endPoint dado.
+    */
     private String findEndPoint (String endPoint){
         if (!validateEndPoint(endPoint, false)) {
             throw new HTTPException();
@@ -99,6 +132,12 @@ public class Registry {
         return finalResult;
     }
 
+    /*
+     * Valida si el endPoint especificado es valido.
+     * @param endPoint Ruta del endPoint.
+     * @param isRegistry Indica si el endPoint es se debe registrar o si se debe buscar.
+     * @return boolean retorna True si el endPoint es valido, de lo contrario retona False.
+     */
     public boolean validateEndPoint(String endPoint, boolean isRegistry){
         if (!endPoint.startsWith("/")) {
             return false;            
@@ -116,6 +155,11 @@ public class Registry {
             );
     }
 
+    /*
+     * Valida si el endPoint especificado esta registrado.
+     * @param endPoint Ruta del endPoint.
+     * @return boolean retorna True si el endPoint esta registrado, de lo contrario retona False.
+     */
     public boolean hasEndPoint(String endPoint){
         String resultFind = this.findEndPoint(endPoint); 
         return resultFind != null && !resultFind.equals("");
