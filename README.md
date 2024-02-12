@@ -110,6 +110,9 @@ http://localhost:35000/index.html
 ```
 
 **6. JSON**
+
+Para este caso en especial obtendremos la información de la película Shadowhunters:
+
 ```
 http://localhost:35000/movie/Shadowhunters
 ```
